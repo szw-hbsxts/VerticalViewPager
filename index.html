@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<template id="account">
+			<div style="width: 300px;float: left;border: aqua 0.0625rem solid; margin-left: 30px;">
+				<h3>定义组件:{{mig}}</h3>
+				<span>传值：{{name1}}-----父传子</span>
+				<br />
+				<span @click="loging">账号：{{zh}}</span>
+				<br />
+				<span @click="sendData">密码：{{mm}}</span>
+			</div>
+		</template>
+		<div id="app">
+			<input type="text" v-model="name" style="width: 25%;float: left;" />
+			<span style="float: left;">{{name}}</span>
+			<span style="float: left;">v-text:</span><span v-text="name" style="float: left;"></span>
+			<span style="float: left;">value：</span><div v-html="value"  style="float: left;"></div>
+			<span style="float: left;">v-bind：</span><a v-bind:href="href" style="float: left;">百度一下，你就知道</a>
+			<br />
+			<span style="float: left;">if-true:</span><span v-if="shoe" style="float: left;">测试if</span>
+			<span style="float: left;">if-false:</span><span v-if="fh" style="float: left;">测试if</span>
+			<br />
+			<span style="float: left;">show-true:</span><span v-show="shoe" style="float: left;">测试show</span>
+			<span style="float: left;">show-false:</span><span v-show="fh" style="float: left;">测试if</span>
+			<br />
+			<span style="float: left;">for:</span>
+			<ul style="width: 300px;float: left;border: bisque 0.0625rem solid; ">
+				<li v-for="item in list">{{item.id}}{{item.name}}</li>
+			</ul>
+			<ul style="width: 300px;float: left;border: aqua 0.0625rem solid; ">
+				<li>v-on绑定事件</li>
+				<li v-on:click="myclick">点击一下试试</li>
+				<li @click="myclick">快捷点击</li>
+			</ul>
+			<account1 :name1="name" v-on:send='getDATA'>
+				
+			</account1>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		Vue.component('account1',{
+			template:'#account',
+			props:{
+				name1:String
+			},
+			data:function(){
+				return{
+					mig:'二狗子',
+					zh:'admin',
+					mm:'admin123'
+				}
+			},
+			methods:{
+				loging:function(){
+					console.log('账号点击')
+				},
+				sendData(){
+					this.$emit('send',123)
+				}
+			}
+		})
+		new Vue({
+			el:'#app',
+			data:{
+				name:'张三',
+				value : "<span>撒江南时代！</span>",
+				href: 'http://www.baidu.com',
+				shoe: true,
+				fh: false,
+				list: [
+					{id:01,name:'张三'},
+					{id:02,name:'李四'},
+					{id:03,name:'二狗子'},
+					{id:04,name:'老邓头'}
+				]
+			},
+			methods:{
+				myclick:function(){
+					console.log('点击事件')
+				},
+				getDATA(input){
+					console.log(input)
+				}
+			}
+		})
+	</script>
+</html>
